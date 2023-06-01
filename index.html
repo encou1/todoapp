@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vue todo</title>
+    <div id="app">
+        <h1>Todo App</h1>
+        <input type="text" v-model="inputText" v-on:keyup.enter="addItem">
+        <button v-on:click="addItem">add</button>
+        <button v-on:click="fetchItems">show all</button>
+        <div>
+            <ul>
+                <li v-for="(item,idx) in todoItems">{{item}} 
+                    <button v-on:click="removeItem(item,idx)">remove</button></li>
+            </ul>
+        </div>
+    </div>
+</head> 
+<body>
+    <div id="app"></div>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script>
+        new Vue({
+            created:function(){
+                this.fetchItems();
+            },
+            el: '#app',
+            data:{
+                inputText: '',
+                todoItems:[]
+            },
+            methods:{
+                addItem:function(event){
+                    var value=this.inputText;
+                    this.inputText = '';
+                    localStorage.setItem(value,value);
+                },
+                fetchItems:function(){
+                    for(var i=0; i < localStorage.length; i++){
+                        var value = localStorage.key(i);
+                        this.todoItems.push(value);
+                    }
+                },
+                removeItem:function(item,idx){
+                    console.log(idx);
+                    this.todoItems.splice(idx,1);
+                    localStorage.removeItem(item);
+                }
+            },
+           
+        })
+   </script>
+</body>
+</html>
