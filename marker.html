@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>노거수</title>
+    
+</head>
+<body>
+<div id="map" style="width:100%;height:650px;"></div>
+
+<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=2b8c8a6f342177fc1cec51cf75778859"></script>
+<script>
+var mapContainer = document.getElementById('map'), // 지도를 표시할 div  
+    mapOption = { 
+        center: new kakao.maps.LatLng(36.6042903	,126.6822284), // 지도의 중심좌표
+        level: 8 // 지도의 확대 레벨
+    };
+
+var map = new kakao.maps.Map(mapContainer, mapOption); // 지도를 생성합니다
+ 
+// 마커를 표시할 위치와 title 객체 배열입니다 
+var positions = [
+//     title: '카카오', latlng: new kakao.maps.LatLng(33.450705, 126.570677)    },
+    {title: '충청남도 홍성군 금마면 장성리 577-1 - 은행나무',latlng: new kakao.maps.LatLng(36.6042903	,126.6822284) },
+	{title: '충청남도 홍성군 구항면 청광리 602 - 은행나무',latlng: new kakao.maps.LatLng(36.5574878	,126.6485858) },
+	{title: '충청남도 홍성군 결성면 읍내리 586 - 느티나무',latlng: new kakao.maps.LatLng(36.5288542	,126.5410204) },
+	{title: '충청남도 홍성군 결성면 읍내리 586 - 팽나무',latlng: new kakao.maps.LatLng(36.5288542	,126.5410204) },
+	{title: '충청남도 홍성군 홍성읍 오관리 98 - 느티나무',latlng: new kakao.maps.LatLng(36.6013022	,126.6586968) },
+	{title: '충청남도 홍성군 금마면 송암리278 - 느티나무',latlng: new kakao.maps.LatLng(36.5936803	,126.7190897) },
+	{title: '충청남도 홍성군 서부면 어사리 176 - 느티나무',latlng: new kakao.maps.LatLng(36.5648531	,126.4916424) },
+	{title: '충청남도 홍성군 장곡면 산성리 168 - 느티나무',latlng: new kakao.maps.LatLng(36.4971655	,126.7422292) },
+	{title: '충청남도 홍성군 결성면 형산리 163 - 느티나무',latlng: new kakao.maps.LatLng(36.5722283	,126.5678381) },
+	{title: '충청남도 홍성군 갈산면 기산리 242 - 느티나무',latlng: new kakao.maps.LatLng(36.6228516	,126.5228264) },
+	{title: '충청남도 홍성군 금마면 부평리 25-5 - 느티나무',latlng: new kakao.maps.LatLng(36.61334	,126.7389833) },
+	{title: '충청남도 홍성군 홍북면 대동리 262-7 - 느티나무',latlng: new kakao.maps.LatLng(36.6434815	,126.6896159) },
+	{title: '충청남도 홍성군 결성면 성호리 918 - 은행나무',latlng: new kakao.maps.LatLng(36.5268912	,126.5164215) },
+	{title: '충청남도 홍성군 홍북면 노은리 143 - 느티나무',latlng: new kakao.maps.LatLng(36.642491	,126.7195693) },
+	{title: '충청남도 홍성군 서부면 이호리 296-1 - 느티나무',latlng: new kakao.maps.LatLng(36.5819819	,126.5117504) },
+	{title: '충청남도 홍성군 홍동면 수란리 산15-4 - 느티나무',latlng: new kakao.maps.LatLng(36.5769901	,126.727023 ) },
+	{title: '충청남도 홍성군 갈산면 오두리 290-1 - 팽나무',latlng: new kakao.maps.LatLng(36.603647	,126.5161687) },
+	{title: '충청남도 홍성군 광천읍 매현리 산94 - 회화나무',latlng: new kakao.maps.LatLng(36.5283691	,126.6338905) },
+	{title: '충청남도 홍성군 구항면 내현리 273-1 - 느티나무',latlng: new kakao.maps.LatLng(36.5724472	,126.6099142) },
+	{title: '충청남도 홍성군 홍북면 내덕리 592-2 - 느티나무',latlng: new kakao.maps.LatLng(36.6179683	,126.68577  ) },
+	{title: '충청남도 홍성군 결성면 읍내리459-1 - 은행나무',latlng: new kakao.maps.LatLng(36.5254241	,126.5425463) },
+	{title: '충청남도 홍성군 홍북면 내덕리 591-2 - 느티나무',latlng: new kakao.maps.LatLng(36.6174431	,126.6861188) },
+	{title: '충청남도 홍성군 홍동면 원천리 421 - 은행나무',latlng: new kakao.maps.LatLng(36.5532125	,126.6567201) },
+	{title: '충청남도 홍성군 갈산면 신안리 산61-1 - 느티나무',latlng: new kakao.maps.LatLng(36.6087569	,126.5757404) },
+	{title: '충청남도 홍성군 결성면 성호리 360 - 느티나무',latlng: new kakao.maps.LatLng(36.5398918	,126.5306164) },
+	{title: '충청남도 홍성군 장곡면 지정리 264-2 - 느티나무',latlng: new kakao.maps.LatLng(36.5160565	,126.7067477) },
+	{title: '충청남도 홍성군 광천읍 소암리 421-3 - 느티나무',latlng: new kakao.maps.LatLng(36.5012466	,126.6370922) },
+	{title: '충청남도 홍성군 결성면 성호리 581 - 느티나무',latlng: new kakao.maps.LatLng(36.5294433	,126.5273445) },
+	{title: '충청남도 홍성군 서부면 이호리 262-4 - 느티나무',latlng: new kakao.maps.LatLng(36.5813098	,126.5113275) },
+	{title: '충청남도 홍성군 장곡면 상송리 618-4 - 느티나무',latlng: new kakao.maps.LatLng(36.5078555	,126.7017344) },
+	{title: '충청남도 홍성군 장곡면 월계리 801 - 느티나무',latlng: new kakao.maps.LatLng(36.5343626	,126.7353545) },
+	{title: '충청남도 홍성군 금마면 가산리 140 - 느티나무',latlng: new kakao.maps.LatLng(36.629701	,126.749823 ) },
+	{title: '충청남도 홍성군 서부면 궁리 561-2 - 느티나무',latlng: new kakao.maps.LatLng(36.5916879	,126.4583586) },
+	{title: '충청남도 홍성군 구항면 내현리 산70-4 - 느티나무',latlng: new kakao.maps.LatLng(36.5760171	,126.6026953) },
+	{title: '충청남도 홍성군 서부면 판교리 25 - 느티나무',latlng: new kakao.maps.LatLng(36.5515614	,126.5249776) },
+	{title: '충청남도 홍성군 서부면 어사리 179-3 - 느티나무',latlng: new kakao.maps.LatLng(36.5646181	,126.491447 ) },
+	{title: '충청남도 홍성군 은하면 목현리 308 - 느티나무',latlng: new kakao.maps.LatLng(36.5236719	,126.5660416) },
+	{title: '충청남도 홍성군 구항면 지정리 416-1 - 느티나무',latlng: new kakao.maps.LatLng(36.5455832	,126.633272 ) },
+	{title: '충청남도 홍성군 장곡면 행정리 804 - 느티나무',latlng: new kakao.maps.LatLng(36.5153106	,126.742491 ) },
+	{title: '충청남도 홍성군 결성면 읍내리329 - 회화나무',latlng: new kakao.maps.LatLng(36.524282	,126.5435558) },
+	{title: '충청남도 홍성군 장곡면 죽전리 536-3 - 느티나무',latlng: new kakao.maps.LatLng(36.5065725	,126.6651929) },
+	{title: '충청남도 홍성군 장곡면 천태리665-2 - 소나무',latlng: new kakao.maps.LatLng(36.5118378	,126.7536974) },
+	{title: '충청남도 홍성군 홍성읍 월산리 430 - 회화나무',latlng: new kakao.maps.LatLng(36.5959377	,126.6371422) },
+	{title: '충청남도 홍성군 갈산면 대사리 500 - 느티나무',latlng: new kakao.maps.LatLng(36.641332	,126.5574315) },
+	{title: '충청남도 홍성군 서부면 중리 산7-1 - 느티나무',latlng: new kakao.maps.LatLng(36.5828777	,126.5254768) },
+	{title: '충청남도 홍성군 서부면 중리 산7-1 - 느티나무',latlng: new kakao.maps.LatLng(36.5828777	,126.5254768) },
+	{title: '충청남도 홍성군 장곡면 화계리 산42 - 소나무',latlng: new kakao.maps.LatLng(36.4913991	,126.6791772) },
+	{title: '충청남도 홍성군 홍성읍 구룡리285 - 느티나무',latlng: new kakao.maps.LatLng(36.5920997	,126.6892031) },
+	{title: '충청남도 홍성군 장곡면 가송리 190-1 - 느티나무',latlng: new kakao.maps.LatLng(36.5078525	,126.6764891) },
+	{title: '충청남도 홍성군 결성면 성남리 산9-3 - 느티나무',latlng: new kakao.maps.LatLng(36.5177626	,126.5449138) },
+	{title: '충청남도 홍성군 구항면 황곡리 산48-1 - 느티나무',latlng: new kakao.maps.LatLng(36.5860177	,126.617691 ) },
+	{title: '충청남도 홍성군 광천읍내죽리 291-2 - 느티나무',latlng: new kakao.maps.LatLng(36.5107488	,126.6547795) },
+	{title: '충청남도 홍성군 구항면 청광리 544-9 - 느티나무',latlng: new kakao.maps.LatLng(36.5572357	,126.6398016) },
+	{title: '충청남도 홍성군 서부면 광리 54 - 느티나무',latlng: new kakao.maps.LatLng(36.5919078	,126.5015138) },
+	{title: '충청남도 홍성군 구항면 내현리 210-7 - 느티나무',latlng: new kakao.maps.LatLng(36.5764168	,126.5998972) },
+	{title: '충청남도 홍성군 서부면 궁리 287-7 - 소나무',latlng: new kakao.maps.LatLng(36.5966324	,126.4751209) },
+	{title: '충청남도 홍성군 서부면 판교리 산33 - 느티나무',latlng: new kakao.maps.LatLng(36.5424321	,126.5287849) },
+	{title: '충청남도 홍성군 구항면 대정리 874-3 - 느티나무',latlng: new kakao.maps.LatLng(36.5451372	,126.6009896) },
+	{title: '충청남도 홍성군 홍동면 구정리753 - 느티나무',latlng: new kakao.maps.LatLng(36.5647445	,126.692844 ) },
+	{title: '충청남도 홍성군 구항면 지정리 85 - 느티나무',latlng: new kakao.maps.LatLng(36.5475032	,126.6363945) },
+	{title: '충청남도 홍성군 홍북면 노은리 120 - 은행나무',latlng: new kakao.maps.LatLng(36.6458712	,126.7274019) },
+	{title: '충청남도 홍성군 서부면 신리 310-1 - 소나무',latlng: new kakao.maps.LatLng(36.5407588	,126.5026956) },
+	{title: '충청남도 홍성군 갈산면 내갈리 129 - 회화나무',latlng: new kakao.maps.LatLng(36.6083133	,126.5642906) },
+	{title: '충청남도 홍성군 홍동면 원천리 산19-1 - 느티나무',latlng: new kakao.maps.LatLng(36.5411237	,126.6629171) },
+	{title: '충청남도 홍성군 광천읍 매현리 165 - 느티나무',latlng: new kakao.maps.LatLng(36.5227446	,126.6302333) },
+	{title: '충청남도 홍성군 홍북면 대인리 421 - 느티나무',latlng: new kakao.maps.LatLng(36.6466848	,126.738925 ) },
+	{title: '충청남도 홍성군 홍성읍 월산리 134-2 - 느티나무',latlng: new kakao.maps.LatLng(36.6035904	,126.64269  ) },
+	{title: '충청남도 홍성군 장곡면 도산리265 - 느티나무',latlng: new kakao.maps.LatLng(36.5084618	,126.6966662) },
+	{title: '충청남도 홍성군 은하면 금국리 산111-1 - 느티나무',latlng: new kakao.maps.LatLng(36.5594384	,126.5663436) },
+	{title: '충청남도 홍성군 장곡면 지정리 450 - 느티나무',latlng: new kakao.maps.LatLng(36.5291317	,126.709016 ) },
+	{title: '충청남도 홍성군 광천읍 옹암리 산26 - 느티나무',latlng: new kakao.maps.LatLng(36.4883783	,126.6169634) },
+	{title: '충청남도 홍성군 홍성읍 오관리 98 - 버드나무',latlng: new kakao.maps.LatLng(36.6013022	,126.6586968) },
+	{title: '충청남도 홍성군 홍동면 팔괘리 307 - 느티나무',latlng: new kakao.maps.LatLng(36.5752284	,126.6956284) },
+	{title: '충청남도 홍성군 장곡면 광성리 220 - 느티나무',latlng: new kakao.maps.LatLng(36.4756234	,126.6768301) },
+	{title: '충청남도 홍성군 홍성읍 오관리 112 - 버드나무',latlng: new kakao.maps.LatLng(36.6012112	,126.6595824) },
+	{title: '충청남도 홍성군 장곡면 오성리 189-2 - 느티나무',latlng: new kakao.maps.LatLng(36.4896604	,126.6621401) },
+	{title: '충청남도 홍성군 장곡면 산성리 392 - 은행나무',latlng: new kakao.maps.LatLng(36.4977645	,126.7422932) },
+	{title: '충청남도 홍성군 서부면 양곡리 249 - 느티나무',latlng: new kakao.maps.LatLng(36.5567818	,126.4977347) },
+	{title: '충청남도 홍성군 서부면 판교리 25 - 느티나무',latlng: new kakao.maps.LatLng(36.5515614	,126.5249776) },
+	{title: '충청남도 홍성군 장곡면 산성리 산28-1 - 버드나무',latlng: new kakao.maps.LatLng(36.4934525	,126.7354631) },
+	{title: '충청남도 홍성군 홍동면 신기리산 176-1 - 느티나무',latlng: new kakao.maps.LatLng(36.5856877	,126.7054492) },
+	{title: '충청남도 홍성군 결성면 교항리 240 - 느티나무',latlng: new kakao.maps.LatLng(36.5800273	,126.5411623) },
+	{title: '충청남도 홍성군 금마면 용흥리208 - 느티나무',latlng: new kakao.maps.LatLng(36.5916995	,126.7299634) },
+	{title: '충청남도 홍성군 금마면 용흥리 493-1 - 느티나무',latlng: new kakao.maps.LatLng(36.582232	,126.7244699) },
+	{title: '충청남도 홍성군 금마면 용흥리370 - 느티나무',latlng: new kakao.maps.LatLng(36.5881983	,126.7199892) },
+	{title: '충청남도 홍성군 서부면 어사리 산8-1 - 느티나무',latlng: new kakao.maps.LatLng(36.5666035	,126.5033482) },
+	{title: '충청남도 홍성군 서부면 어사리 산8-1 - 느티나무',latlng: new kakao.maps.LatLng(36.5666035	,126.5033482) },
+	{title: '충청남도 홍성군 홍성읍 오관리98 - 느티나무',latlng: new kakao.maps.LatLng(36.6013022	,126.6586968) },
+	{title: '충청남도 홍성군 광천읍 벽계리 448-1 - 팽나무',latlng: new kakao.maps.LatLng(36.5341708	,126.6241528) },
+	{title: '충청남도 홍성군 서부면 판교리 산95-1 - 소나무',latlng: new kakao.maps.LatLng(36.5522839	,126.5278076) },
+	{title: '충청남도 홍성군 갈산면 쌍천리 64-1 - 느티나무',latlng: new kakao.maps.LatLng(36.5945375	,126.5793451) },
+	{title: '충청남도 홍성군 홍성읍 오관리98 - 느티나무',latlng: new kakao.maps.LatLng(36.6013022	,126.6586968) },
+	{title: '충청남도 홍성군 홍동면 운월리 598-2 - 느릅나무',latlng: new kakao.maps.LatLng(36.5503925	,126.6791485) },
+	{title: '충청남도 홍성군 장곡면 대현리254 - 은행나무',latlng: new kakao.maps.LatLng(36.5074621	,126.7268053) },
+	{title: '충청남도 홍성군 금마면 부평리 100 - 느티나무',latlng: new kakao.maps.LatLng(36.6121462	,126.7315167) },
+	{title: '충청남도 홍성군 결성면 형산리 189-6 - 느티나무',latlng: new kakao.maps.LatLng(36.5715482	,126.5654576) },
+	{title: '충청남도 홍성군 홍동면 월현리557-3 - 느티나무',latlng: new kakao.maps.LatLng(36.5566921	,126.6714837) },
+	{title: '충청남도 홍성군 서부면 중리 188-1 - 느티나무',latlng: new kakao.maps.LatLng(36.5844625	,126.5194083) },
+	{title: '충청남도 홍성군 홍북면 노은리333-1 - 버드나무',latlng: new kakao.maps.LatLng(36.6448485	,126.7160513) },
+	{title: '충청남도 홍성군 광천읍 소암리 149-1 - 느티나무',latlng: new kakao.maps.LatLng(36.5116494	,126.6388927) },
+	{title: '충청남도 홍성군 홍동면 신기리 산118-2 - 소나무',latlng: new kakao.maps.LatLng(36.5757083	,126.7071965) },
+	{title: '충청남도 홍성군 금마면 용흥리80 - 느티나무',latlng: new kakao.maps.LatLng(36.5138464	,126.6074443) },
+	{title: '충청남도 홍성군 광천읍 옹암리 산26 - 말채나무',latlng: new kakao.maps.LatLng(36.4883783	,126.6169634) },
+	{title: '충청남도 홍성군 은하면 금국리 735 - 소나무',latlng: new kakao.maps.LatLng(36.5621925	,126.5662068) },
+	{title: '충청남도 홍성군 홍북읍 대인리 722 - 향나무',latlng: new kakao.maps.LatLng(36.638313	,126.738203 ) },
+	{title: '충청남도 홍성군 홍북면 용산리133-7 - 버드나무',latlng: new kakao.maps.LatLng(36.635482	,126.7017354) },
+	{title: '충청남도 홍성군 결성면 읍내리 701-2 - 모과나무',latlng: new kakao.maps.LatLng(36.5258122	,126.5405326) },
+	{title: '충청남도 홍성군 갈산면 행산리 311-1 - 팽나무',latlng: new kakao.maps.LatLng(36.5977128	,126.5426202) },
+	{title: '충청남도 홍성군 홍성읍 오관리 98 - 소나무',latlng: new kakao.maps.LatLng(36.6013022	,126.6586968) },
+	{title: '충청남도 홍성군 구항면 오봉리산54-4 - 느티나무',latlng: new kakao.maps.LatLng(36.6043303	,126.6091923) },
+	{title: '충청남도 홍성군 은하면 대율리 116-1 - 느티나무',latlng: new kakao.maps.LatLng(36.552203	,126.5881913) },
+	{title: '충청남도 홍성군 은하면 학산리 323 - 느티나무',latlng: new kakao.maps.LatLng(36.5417431	,126.5717926) },
+	{title: '충청남도 홍성군 은하면 대천리64 - 느티나무',latlng: new kakao.maps.LatLng(36.5297104	,126.5914771) },
+	{title: '충청남도 홍성군 광천읍 옹암리 277-2 - 느티나무',latlng: new kakao.maps.LatLng(36.4935245	,126.6213776) },
+	{title: '충청남도 홍성군 은하면 장척리114 - 느티나무',latlng: new kakao.maps.LatLng(36.4905524	,126.6103233) },
+	{title: '충청남도 홍성군 갈산면 운곡리 394-1 - 느티나무',latlng: new kakao.maps.LatLng(36.6199433	,126.5502737) },
+	{title: '충청남도 홍성군 은하면 장곡리 310-4 - 느티나무',latlng: new kakao.maps.LatLng(36.5525872	,126.6060865) },
+	{title: '충청남도 홍성군 구항면 오봉리216 - 느티나무',latlng: new kakao.maps.LatLng(36.6012555	,126.6105785) },
+	{title: '충청남도 홍성군 결성면 형산리 30-3 - 소나무',latlng: new kakao.maps.LatLng(36.5772362	,126.5755411) },
+	{title: '충청남도 홍성군 홍북읍 대인리 125 - 모과나무',latlng: new kakao.maps.LatLng(36.643098	,126.738891 ) },
+	{title: '충청남도 홍성군 서부면 양곡리 249 - 팽나무',latlng: new kakao.maps.LatLng(36.5567818	,126.4977347) },
+	{title: '충청남도 홍성군 서부면 판교리479 - 느티나무',latlng: new kakao.maps.LatLng(36.5431302	,126.5281742) },
+	{title: '충청남도 홍성군 결성면 용호리 613 - 느티나무',latlng: new kakao.maps.LatLng(36.5735736	,126.5434777) },
+	{title: '충청남도 홍성군 결성면 금곡리 462-1 - 팽나무',latlng: new kakao.maps.LatLng(36.5247634	,126.5534314) }
+		
+	];
+
+// 마커 이미지의 이미지 주소입니다
+var imageSrc = "/image"; 
+    
+for (var i = 0; i < positions.length; i ++) {
+    
+    // 마커 이미지의 이미지 크기 입니다
+    var imageSize = new kakao.maps.Size(24, 35); 
+    
+    // 마커 이미지를 생성합니다    
+    var markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize); 
+    
+    // 마커를 생성합니다
+    var marker = new kakao.maps.Marker({
+        map: map, // 마커를 표시할 지도
+        position: positions[i].latlng, // 마커를 표시할 위치
+        title : positions[i].title, // 마커의 타이틀, 마커에 마우스를 올리면 타이틀이 표시됩니다
+        image : markerImage // 마커 이미지 
+    });
+}
+</script>
+</body>
+</html>
