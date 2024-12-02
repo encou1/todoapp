@@ -13,7 +13,7 @@
 const OTreeAry = [];		//답사완료나무배열
 const XTreeAry = [];		//답사미완료나무배열
 	window.addEventListener("DOMContentLoaded", () => {
-		fetch("hong.csv")
+		fetch("/todoapp/hong.csv")
 			.then(response => response.text())
 			.then(csvContent => {
 				const rows = csvContent.split("\n").map(row => row.split(","));
