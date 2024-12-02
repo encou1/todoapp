@@ -7,9 +7,24 @@
 	hong.csv파일의 첫번째 컬럼(답사여부)의 값을  O,X로 변경하면 그에 따라 지도내의 나무 이미지가 변경됨
 	아래 에서 for루프 돌아가는 부분이 비효율적으로 반복되는것은 예산의 노거수 리스트가 추가될때 개선할 예정임
     </Description>
+	<style>
+	        /* HTML과 body의 기본 크기를 설정 */
+	        html, body {
+	            margin: 0;
+	            padding: 0;
+	            width: 100%;
+	            height: 100%;
+	        }
+	
+	        /* #map div를 화면 전체로 확장 */
+	        #map {
+	            width: 100%;
+	            height: 100%;
+	        }
+	</style>
 </head>
 <body>
-<div id="map" style="width:100%;height:650px;"></div>
+<div id="map"></div>
 
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=3afaaf74020c04fd36df50d296266032"></script>
 <script>
