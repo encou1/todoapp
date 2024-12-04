@@ -54,10 +54,11 @@ const XTreeAry = [];		//답사미완료나무배열
 
 				rows.forEach(row => {
 					if (row[0] === "O") {
-						OAry = {O   title: row[19] + " - "+row[6] , latlng: new kakao.maps.LatLng(row[20], row[21])};
+						OAry = {title: row[19] + " - "+row[6] , latlng: new kakao.maps.LatLng(row[20], row[21])};
 						OTreeAry.push(OAry);
+						console.log("답사여부:"+row[0] +"수종:"+row[6] +"나이:"+row[10] +"주소:"+row[19] +"위도:"+row[20]+"경도:"+row[21]);
 					} else if (row[0] === "X") {
-						XAry = {X   title: row[19] + " - "+row[6] , latlng: new kakao.maps.LatLng(row[20], row[21])};
+						XAry = {title: row[19] + " - "+row[6] , latlng: new kakao.maps.LatLng(row[20], row[21])};
 						XTreeAry.push(XAry);
 						console.log("답사여부:"+row[0] +"수종:"+row[6] +"나이:"+row[10] +"주소:"+row[19] +"위도:"+row[20]+"경도:"+row[21]);
 					}
@@ -77,11 +78,11 @@ const XTreeAry = [];		//답사미완료나무배열
 				}
 				
 				//답사미완나무  마커표시
-				console.log(XTreeAry);
+				//console.log(XTreeAry);
 				for (var i = 0; i < XTreeAry.length; i ++) {
 				    // 마커 이미지를 생성합니다    
 				    var markerImage = new kakao.maps.MarkerImage(XTreeImg, imageSize); 
-				    console.log(XTreeAry[i]);
+				  //  console.log(XTreeAry[i]);
 				    // 마커를 생성합니다
 				    var marker = new kakao.maps.Marker({
 				        map: map, // 마커를 표시할 지도
