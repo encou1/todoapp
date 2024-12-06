@@ -53,15 +53,14 @@ const XTreeAry = [];		//답사미완료나무배열
 				XAry = {};
 
 				rows.forEach(row => {
+					OAry = {title: row[19] + " - "+row[6] +" 수령:"+row[10], latlng: new kakao.maps.LatLng(row[20], row[21])};						
 					if (row[0] === "O") {
-						OAry = {title: row[19] + " - "+row[6] , latlng: new kakao.maps.LatLng(row[20], row[21])};
 						OTreeAry.push(OAry);
-						console.log("답사여부:"+row[0] +"수종:"+row[6] +"나이:"+row[10] +"주소:"+row[19] +"위도:"+row[20]+"경도:"+row[21]);
 					} else if (row[0] === "X") {
-						XAry = {title: row[19] + " - "+row[6] , latlng: new kakao.maps.LatLng(row[20], row[21])};
-						XTreeAry.push(XAry);
-						console.log("답사여부:"+row[0] +"수종:"+row[6] +"나이:"+row[10] +"주소:"+row[19] +"위도:"+row[20]+"경도:"+row[21]);
+						XTreeAry.push(OAry);
 					}
+					console.log("답사여부:"+row[0] +"수종:"+row[6] +"나이:"+row[10] +"주소:"+row[19] +"위도:"+row[20]+"경도:"+row[21]);
+
 				});
 				//답사완료나무 마커표시
 				for (var i = 0; i < OTreeAry.length; i ++) {
