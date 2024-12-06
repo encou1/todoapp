@@ -50,8 +50,6 @@ const XTreeAry = [];		//답사미완료나무배열
 			.then(csvContent => {
 				const rows = csvContent.split("\n").map(row => row.split(","));
 				OAry = {};
-				XAry = {};
-
 				rows.forEach(row => {
 					OAry = {title: row[19] + " - "+row[6] +" 수령:"+row[10], latlng: new kakao.maps.LatLng(row[20], row[21])};						
 					if (row[0] === "O") {
@@ -89,7 +87,7 @@ const XTreeAry = [];		//답사미완료나무배열
 				        position: XTreeAry[i].latlng, // 마커를 표시할 위치
 				        title : XTreeAry[i].title, // 마커의 타이틀, 마커에 마우스를 올리면 타이틀이 표시됩니다
 				        image : markerImage, // 마커 이미지 
-					text : OTreeAry[i].title	//텍스트    
+					text : XTreeAry[i].title	//텍스트    
 				    });
 				}
 			});
