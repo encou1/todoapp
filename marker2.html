@@ -5,7 +5,6 @@
     <title>노거수</title>
     <Description>
 	hong.csv파일의 첫번째 컬럼(답사여부)의 값을  O,X로 변경하면 그에 따라 지도내의 나무 이미지가 변경됨
-	아래 에서 for루프 돌아가는 부분이 비효율적으로 반복되는것은 예산의 노거수 리스트가 추가될때 개선할 예정임
     </Description>
 	<style>
 	        /* HTML과 body의 기본 크기를 설정 */
@@ -57,42 +56,44 @@ function initializeMap() {
     initializeMarkers(map); // 마커 표시 함수
 }
 
-function initializeMarkers(map){	
-	// 마커 이미지의 이미지 주소입니다
-	var OTreeImg = "/todoapp/image/tree2.png"; 
-	var XTreeImg = "/todoapp/image/tree.png"; 
-	var imageSize = new kakao.maps.Size(48, 70);     
-		
-	const OTreeAry = [];		//답사완료나무배열
-	const XTreeAry = [];		//답사미완료나무배열
-		window.addEventListener("DOMContentLoaded", () => {
-			fetch("/todoapp/hong.csv")
-				.then(response => response.text())
-				.then(csvContent => {
-					const rows = csvContent.split("\n").map(row => row.split(","));
-					OAry = {};
-					rows.forEach(row => {
-						OAry = {txt : row[6] +"  " +row[10],title: row[19] + " - "+row[6] +" 수령:"+row[10], latlng: new kakao.maps.LatLng(row[20], row[21])};						
-						if (row[0] === "O") {
-							OTreeAry.push(OAry);
-						} else if (row[0] === "X") {
-							XTreeAry.push(OAry);
-						}
-						//console.log("답사여부:"+row[0] +"수종:"+row[6] +"나이:"+row[10] +"주소:"+row[19] +"위도:"+row[20]+"경도:"+row[21]);
-	
-					});
-					//답사완료나무 마커표시
-					//console.log(OTreeAry);
-					createMarkers(OTreeAry, map, OTreeImg);
-					
-					
-					//답사미완나무  마커표시
-					//console.log(XTreeAry);
-					createMarkers(XTreeAry, map, XTreeImg);
-					
-				});
-		});
-}	
+function initializeMarkers(map) {	
+    // 마커 이미지의 이미지 주소
+    const OTreeImg = "/todoapp/image/tree2.png"; 
+    const XTreeImg = "/todoapp/image/tree.png"; 
+    const OTreeAry = []; // 답사 완료 나무 배열
+    const XTreeAry = []; // 답사 미완료 나무 배열
+
+    fetch("/todoapp/hong.csv")
+        .then(response => response.text())
+        .then(csvContent => {
+            const rows = csvContent.split("\n").map(row => row.split(","));
+            rows.forEach(row => {
+                const lat = parseFloat(row[20]);
+                const lng = parseFloat(row[21]);
+                if (!isNaN(lat) && !isNaN(lng)) {
+                    const tree = {
+                        txt: row[6] + "  " + row[10],
+                        title: row[19] + " - " + row[6] + " 수령:" + row[10],
+                        latlng: new kakao.maps.LatLng(lat, lng)
+                    };
+                    if (row[0] === "O") {
+                        OTreeAry.push(tree);
+                    } else if (row[0] === "X") {
+                        XTreeAry.push(tree);
+                    }
+                } else {
+                    console.error("Invalid coordinates:", row[20], row[21]);
+                }
+            });
+            // 답사 완료, 미완료 나무 마커 표시
+            createMarkers(OTreeAry, map, OTreeImg);
+            createMarkers(XTreeAry, map, XTreeImg);
+        })
+        .catch(error => {
+            console.error("Error loading CSV:", error);
+        });
+}
+
 function createMarkers(treeArray, map, imageSrc) {
     const imageSize = new kakao.maps.Size(48, 70);
     const markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize);
