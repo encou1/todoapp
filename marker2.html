@@ -73,18 +73,18 @@
 					var latitude = position.coords.latitude;
 					var longitude = position.coords.longitude;
 					locPosition = new kakao.maps.LatLng(latitude, longitude);
-					console.debug(position);
+					console.debug("succ callback:"+position);
 					initializeMap(); // 지도를 여기서 초기화
 				},
 				function() {
-					console.debug(position);
+					console.debug("err callback:");
 					locPosition = new kakao.maps.LatLng(36.6642233222049, 126.67012925835448);
 					initializeMap(); // 지도를 기본 위치로 초기화
 				}
 			);
 		} else {
-			console.debug(position);
 			locPosition = new kakao.maps.LatLng(36.6642233222049, 126.67012925835448);
+			console.debug("default :"+ locPosition);
 			initializeMap();
 		}
 
