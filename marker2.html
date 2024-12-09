@@ -30,59 +30,69 @@
 <script>
 var locPosition;
 var mapContainer = document.getElementById('map'); // 지도를 표시할 div
-
 if (navigator.geolocation) {
-	// GeoLocation을 이용해서 접속 위치를 얻어옵니다
-	navigator.geolocation.getCurrentPosition(function(position) {
-		var latitude = position.coords.latitude;
-		var longitude = position.coords.longitude;
-		locPosition = new kakao.maps.LatLng(latitude, longitude); // 마커가 표시될 위치를 geolocation으로 얻어온 좌표로 생성합니다
-	});
-}else{
-	locPosition = new kakao.maps.LatLng(36.6642233222049,126.67012925835448);
+    navigator.geolocation.getCurrentPosition(
+        function(position) {
+            var latitude = position.coords.latitude;
+            var longitude = position.coords.longitude;
+            locPosition = new kakao.maps.LatLng(latitude, longitude);
+            initializeMap(); // 지도를 여기서 초기화
+        },
+        function() {
+            locPosition = new kakao.maps.LatLng(36.6642233222049, 126.67012925835448);
+            initializeMap(); // 지도를 기본 위치로 초기화
+        }
+    );
+} else {
+    locPosition = new kakao.maps.LatLng(36.6642233222049, 126.67012925835448);
+    initializeMap();
 }
-console.debug(locPosition);
-mapOption = { 
-	center: locPosition, // 지도의 중심좌표
-	level: 8 // 지도의 확대 레벨
+
+function initializeMap() {
+    mapOption = {
+        center: locPosition, // 지도의 중심좌표
+        level: 8 // 지도의 확대 레벨
     };
-var map = new kakao.maps.Map(mapContainer, mapOption); // 지도를 생성합니다
+    var map = new kakao.maps.Map(mapContainer, mapOption);
+    initializeMarkers(map); // 마커 표시 함수
+}
 
- 
-// 마커 이미지의 이미지 주소입니다
-var OTreeImg = "/todoapp/image/tree2.png"; 
-var XTreeImg = "/todoapp/image/tree.png"; 
-var imageSize = new kakao.maps.Size(48, 70);     
+function initializeMarkers(){	
+	// 마커 이미지의 이미지 주소입니다
+	var OTreeImg = "/todoapp/image/tree2.png"; 
+	var XTreeImg = "/todoapp/image/tree.png"; 
+	var imageSize = new kakao.maps.Size(48, 70);     
+		
+	const OTreeAry = [];		//답사완료나무배열
+	const XTreeAry = [];		//답사미완료나무배열
+		window.addEventListener("DOMContentLoaded", () => {
+			fetch("/todoapp/hong.csv")
+				.then(response => response.text())
+				.then(csvContent => {
+					const rows = csvContent.split("\n").map(row => row.split(","));
+					OAry = {};
+					rows.forEach(row => {
+						OAry = {txt : row[6] +"  " +row[10],title: row[19] + " - "+row[6] +" 수령:"+row[10], latlng: new kakao.maps.LatLng(row[20], row[21])};						
+						if (row[0] === "O") {
+							OTreeAry.push(OAry);
+						} else if (row[0] === "X") {
+							XTreeAry.push(OAry);
+						}
+						//console.log("답사여부:"+row[0] +"수종:"+row[6] +"나이:"+row[10] +"주소:"+row[19] +"위도:"+row[20]+"경도:"+row[21]);
 	
-const OTreeAry = [];		//답사완료나무배열
-const XTreeAry = [];		//답사미완료나무배열
-	window.addEventListener("DOMContentLoaded", () => {
-		fetch("/todoapp/hong.csv")
-			.then(response => response.text())
-			.then(csvContent => {
-				const rows = csvContent.split("\n").map(row => row.split(","));
-				OAry = {};
-				rows.forEach(row => {
-					OAry = {txt : row[6] +"  " +row[10],title: row[19] + " - "+row[6] +" 수령:"+row[10], latlng: new kakao.maps.LatLng(row[20], row[21])};						
-					if (row[0] === "O") {
-						OTreeAry.push(OAry);
-					} else if (row[0] === "X") {
-						XTreeAry.push(OAry);
-					}
-					//console.log("답사여부:"+row[0] +"수종:"+row[6] +"나이:"+row[10] +"주소:"+row[19] +"위도:"+row[20]+"경도:"+row[21]);
-
+					});
+					//답사완료나무 마커표시
+					//console.log(OTreeAry);
+					createMarkers(OTreeAry, map, OTreeImg);
+					
+					
+					//답사미완나무  마커표시
+					//console.log(XTreeAry);
+					createMarkers(XTreeAry, map, XTreeImg);
+					
 				});
-				//답사완료나무 마커표시
-				//console.log(OTreeAry);
-				createMarkers(OTreeAry, map, OTreeImg);
-				
-				
-				//답사미완나무  마커표시
-				//console.log(XTreeAry);
-				createMarkers(XTreeAry, map, XTreeImg);
-				
-			});
-	});
+		});
+}	
 function createMarkers(treeArray, map, imageSrc) {
     const imageSize = new kakao.maps.Size(48, 70);
     const markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize);
