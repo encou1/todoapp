@@ -86,6 +86,7 @@ function initializeMarkers(map) {
                 }
             });
             // 답사 완료, 미완료 나무 마커 표시
+	    console.debug("size : " + OTreeAry.length + XTreeAry.length );
             createMarkers(OTreeAry, map, OTreeImg);
             createMarkers(XTreeAry, map, XTreeImg);
         })
