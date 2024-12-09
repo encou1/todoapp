@@ -28,10 +28,10 @@
 
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=3afaaf74020c04fd36df50d296266032"></script>
 <script>
-
-var mapContainer = document.getElementById('map'), // 지도를 표시할 div
 var lat; // 위도
 var lon; //경도
+var mapContainer = document.getElementById('map') // 지도를 표시할 div
+
 if (navigator.geolocation) {
 	// GeoLocation을 이용해서 접속 위치를 얻어옵니다
 	navigator.geolocation.getCurrentPosition(function(position) {
