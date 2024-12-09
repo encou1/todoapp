@@ -135,9 +135,6 @@
 		function createMarkers(treeArray, map, imageSrc) {
 			const imageSize = new kakao.maps.Size(48, 70);
 			const markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize);
-			var content = '<div class="customoverlay">' +
-				      '	<span class="title">' + tree.txt + '</span>' +
-				      '</div>';
 			treeArray.forEach(tree => {
 				new kakao.maps.Marker({
 					map: map,
@@ -148,7 +145,9 @@
 				var customOverlay = new kakao.maps.CustomOverlay({
 					map: map,
 					position: tree.latlng,
-					content: content,
+					content: '<div class="customoverlay">' +
+				      		 '	<span class="title">' + tree.txt + '</span>' +
+				      		 '</div>',
 					yAnchor: 1 
 				});
 			});
