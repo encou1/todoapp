@@ -50,7 +50,7 @@ if (navigator.geolocation) {
 function initializeMap() {
     mapOption = {
         center: locPosition, // 지도의 중심좌표
-        level: 8 // 지도의 확대 레벨
+        level: 9 // 지도의 확대 레벨
     };
     var map = new kakao.maps.Map(mapContainer, mapOption);
     initializeMarkers(map); // 마커 표시 함수
