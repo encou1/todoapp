@@ -110,11 +110,11 @@
 					rows.forEach(row => {
 						const lat = parseFloat(row[20]);
 						const lng = parseFloat(row[21]);
-
-						// 좌표 변환
-						var result = proj4("EPSG:4326", "EPSG:5181", [lng, lat]);
-						console.log("EPSG:5181 좌표: ", result +" 기존좌표 : "+ lng +"   " + lat);
 						if (!isNaN(lat) && !isNaN(lng)) {
+							// 좌표 변환
+							var result = proj4("EPSG:4326", "EPSG:5181", [lng, lat]);
+							console.log("EPSG:5181 좌표: ", result +" 기존좌표 : "+ lng +"   " + lat);
+							
 							const tree = {
 								txt: row[8] +"("+ row[9]+")  수령: " + row[10] + " 주소: "+row[19]+" (좌표 : "+ row[20] + " ," + row[21] +" )",
 								latlng: new kakao.maps.LatLng(lat, lng)
