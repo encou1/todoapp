@@ -102,7 +102,8 @@ function createMarkers(treeArray, map, imageSrc) {
             map: map,
             position: tree.latlng,
             image: markerImage,
-            title: tree.title
+            //title: tree.title,
+	    text : tree.txt
         });
     });
 }
