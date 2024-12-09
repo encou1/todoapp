@@ -34,9 +34,9 @@ var mapContainer = document.getElementById('map'); // 지도를 표시할 div
 if (navigator.geolocation) {
 	// GeoLocation을 이용해서 접속 위치를 얻어옵니다
 	navigator.geolocation.getCurrentPosition(function(position) {
-		var lat = position.coords.latitude, // 위도
-		lon = position.coords.longitude; // 경도
-		locPosition = new kakao.maps.LatLng(lat, lon); // 마커가 표시될 위치를 geolocation으로 얻어온 좌표로 생성합니다
+		var latitude = pos.coords.latitude;
+		var longitude = pos.coords.longitude;
+		locPosition = new kakao.maps.LatLng(latitude, longitude); // 마커가 표시될 위치를 geolocation으로 얻어온 좌표로 생성합니다
 	});
 }else{
 	locPosition = new kakao.maps.LatLng(36.6642233222049,126.67012925835448);
