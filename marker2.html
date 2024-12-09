@@ -64,7 +64,6 @@
 
 	<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=3afaaf74020c04fd36df50d296266032"></script>
 	<script>
-		var locPosition;
 		var mapContainer = document.getElementById('map'); // 지도를 표시할 div
 
 		if (navigator.geolocation) {
@@ -73,22 +72,20 @@
 					var latitude = position.coords.latitude;
 					var longitude = position.coords.longitude;
 					locPosition = new kakao.maps.LatLng(latitude, longitude);
-					initializeMap(); // 지도를 여기서 초기화
-				},
-				function() {
-					locPosition = new kakao.maps.LatLng(36.6642233222049, 126.67012925835448);
-					initializeMap(); // 지도를 기본 위치로 초기화
+					console.info("geoloca : " + locPosition);
+					initializeMap(locPosition); // 지도를 여기서 초기화
 				}
 			);
 		} else {
+			console.info("default loca : " + locPosition);
 			locPosition = new kakao.maps.LatLng(36.6642233222049, 126.67012925835448);
-			initializeMap();
+			initializeMap(locPosition);
 		}
 
-		function initializeMap() {
+		function initializeMap(locPosition) {
 			mapOption = {
 				center: locPosition, // 지도의 중심좌표
-				level: 4 // 지도의 확대 레벨
+				level: 6 // 지도의 확대 레벨
 			};
 			var map = new kakao.maps.Map(mapContainer, mapOption);
 			initializeMarkers(map); // 마커 표시 함수
