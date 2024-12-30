@@ -119,6 +119,7 @@
 							// 좌표 변환(WGS84는 EPSG:4326으로 표현됨)
 							console.log("EPSG:4326 기존 좌표 ===================== "+ lng +"   " + lat);
 							var result = proj4("EPSG:4326", "EPSG:5181", [lng, lat]);
+							console.log(result);
 							lng = result[0];
 							lat = result[1];
 							console.log("EPSG:5181 변환 좌표 ===================== "+ lng +"   " + lat);
