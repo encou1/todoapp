@@ -52,7 +52,11 @@
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/proj4js/2.7.5/proj4.js"></script>
 	<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=3afaaf74020c04fd36df50d296266032"></script>
 	<script>
+		// EPSG:5181 좌표계 정의
 		proj4.defs("EPSG:5181", "+proj=tmerc +lat_0=38 +lon_0=127 +k=1 +x_0=200000 +y_0=500000 +ellps=GRS80 +units=m +no_defs");
+
+
+
 		var locPosition;
 		var mapContainer = document.getElementById('map'); // 지도를 표시할 div
 		var markerW = 72;
@@ -112,15 +116,16 @@
 						const lat = parseFloat(row[20]);
 						const lng = parseFloat(row[21]);
 						if (!isNaN(lat) && !isNaN(lng)) {
-							// 좌표 변환
+							// 좌표 변환(WGS84는 EPSG:4326으로 표현됨)
+							console.log("EPSG:4326 기존 좌표 ===================== "+ lng +"   " + lat);
 							var result = proj4("EPSG:4326", "EPSG:5181", [lng, lat]);
-							console.log("EPSG:5181 변환 좌표 =====================");
-							console.log( result );
-							console.log(" 기존좌표 : "+ lng +"   " + lat);
-							
+							lng = result[0];
+							lat = result[1];
+							console.log("EPSG:5181 변환 좌표 ===================== "+ lng +"   " + lat);
 							const tree = {
 								txt: row[8] +"("+ row[9]+")  수령: " + row[10] + " 주소: "+row[19]+" (좌표 : "+ row[20] + " ," + row[21] +" )",
 								latlng: new kakao.maps.LatLng(lat, lng)
+								
 							};
 							if (row[0] === "O") {
 								OTreeAry.push(tree);
