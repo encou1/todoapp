@@ -113,8 +113,8 @@
 				.then(csvContent => {
 					const rows = csvContent.split("\n").map(row => row.split(","));
 					rows.forEach(row => {
-						const lat = parseFloat(row[20]);
-						const lng = parseFloat(row[21]);
+						var lat = parseFloat(row[20]);
+						var lng = parseFloat(row[21]);
 						if (!isNaN(lat) && !isNaN(lng)) {
 							// 좌표 변환(WGS84는 EPSG:4326으로 표현됨)
 							console.log("EPSG:4326 기존 좌표 ===================== "+ lng +"   " + lat);
