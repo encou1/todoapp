@@ -67,23 +67,23 @@
 					var latitude = position.coords.latitude;
 					var longitude = position.coords.longitude;
 					locPosition = new kakao.maps.LatLng(latitude, longitude);
-					console.debug("leolocation succ callback:"+position);
+					console.debug("geolocation succ callback:"+position);
 					initializeMap(); // 지도를 여기서 초기화
 				},
 				function() {
-					console.error("leolocation err callback:");
+					console.error("geolocation err callback:");
 					locPosition = new kakao.maps.LatLng(36.6642233222049, 126.67012925835448);
 					initializeMap(); // 지도를 기본 위치로 초기화
 				}
 			);
 		} else {
 			locPosition = new kakao.maps.LatLng(36.6642233222049, 126.67012925835448);
-			console.debug("leolocation default :"+ locPosition);
+			console.debug("geolocation default :"+ locPosition);
 			initializeMap();
 		}
 
 		function initializeMap() {
-			mapOption = {
+			var mapOption = {
 				center: locPosition, // 지도의 중심좌표
 				level: 4 // 지도의 확대 레벨
 			};
@@ -119,7 +119,6 @@
 							// 좌표 변환(WGS84는 EPSG:4326으로 표현됨)
 							console.log("EPSG:4326 기존 좌표 ===================== "+ lng +"   " + lat);
 							var result = proj4("EPSG:4326", "EPSG:5181", [lng, lat]);
-							console.log(result);
 							lng = result[0];
 							lat = result[1];
 							console.log("EPSG:5181 변환 좌표 ===================== "+ lng +"   " + lat);
